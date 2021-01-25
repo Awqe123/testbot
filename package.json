@@ -1,11 +1,14 @@
 {
+
   "name": "albion-bot",
-  "version": "1.0.0",
   "description": "",
+  "version": "1.0.0",
   "main": "bot.js",
   "scripts": {
-    "start": "node bot"
+    "start": "node bot.js"
   },
-  "author": "",
-  "license": "ISC"
+  "dependencies": {
+    "discord.js": "12.5.0",
+    "request": "2.81.0"
+  }
 }
