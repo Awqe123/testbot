@@ -1,0 +1,11 @@
+{
+  "name": "albion-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot"
+  },
+  "author": "",
+  "license": "ISC"
+}
