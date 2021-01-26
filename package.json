@@ -1,14 +1,14 @@
 {
-  "name": "albion-bo",
+  "name": "albion-bot",
+  "description": "Example",
   "version": "1.0.0",
   "main": "bot.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node bot.js"
+
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "discord.js": "12.5.0"
-  },
-  "description": ""
+    "discord.js": "12.5.0",
+    "request": "2.81.0"
+  }
 }
