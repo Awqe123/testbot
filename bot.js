@@ -5,7 +5,7 @@ const client = new Discord.Client();
 client.on('ready', () => {
   console.log('[Bot] Включен!');
   client.user.setStatus('available')
-  client.user.setPresence({ activity: { name: 'твоем ANAL пальцем' }, status: '1' })
+  client.user.setPresence({ activity: { name: 'твоем anal пальцем' }, status: '1' });
 });
 function arrayRandElement(arr) {
   var rand = Math.floor(Math.random() * arr.length);
@@ -14,13 +14,13 @@ function arrayRandElement(arr) {
 // message.author.send("123") 
 client.on('message', message => {
   if (message.content === '.ping') {
-	message.delete();
+    message.delete();
     message.channel.send('Получаю информацию...').then (async (msg) =>{
       msg.delete()
       const embed = {"title": "Пропинговка бота.. ",
       "color": 3316565,
       "footer": {
-        "text": `Задержка  ${msg.createdTimestamp - message.createdTimestamp}ms. \nAPI Задержка ${Math.round(client.ws.ping)}ms`
+        "text": `Задержка  ${message.createdTimestamp - message.createdTimestamp}ms. \nAPI Задержка ${Math.round(client.ws.ping)}ms`
         }
       };
       message.channel.send({embed}).then(m => m.delete({timeout: 1000 * 10}));
@@ -49,6 +49,18 @@ client.on('message', message => {
         };
         chann1.send(message.content + "\nАвтор анкеты: <@" + message.author.id + ">\nhttps://app.sigmacomputing.com/embed/2Fb3n6osB7MZ0psRKGqR6?name="+nick),message.delete(), message.channel.send({embed}).then(m => m.delete({timeout: 1000 * 30}));
       }
+    }
+    if(!message.author.bot && !message.content.includes('Общая информация.') && !message.content.includes('.ping') && !message.content.includes('Игровая информация.') && !message.content.includes('Откуда вы о нас узнали? (Ник рекрута/видео/чат):') && !message.content.includes('Дополнительная информация.')){
+      message.delete()
+      const embed = {"title":"[Ошибка]",
+      "color": 16711680,
+      "description":"Сообщение удалено, данный чат работает только для анкет\nПроверь правильность своей анкеты..",
+      "timestamp":new Date(),
+      "footer": {
+          "text": "Заявки | AvalonsMasters"
+      }
+      };
+      message.channel.send({embed}).then(m => m.delete({timeout: 1000 * 30}));
     }
   }
   else if(message.channel.name === '├📝┤проверка-заявок')
@@ -82,6 +94,7 @@ client.on('message', message => {
     }
   }
 });
+
 
 client.on("messageReactionAdd", (reaction, user) => {
   if(user == client.user) return;
