@@ -70,7 +70,7 @@ client.on('message', message => {
       message.react('❌');
       message.react('🗑️');
       let massiv = message.content.split('\n');
-      var nick = massiv[7].substring(massiv[7].indexOf("- Имя персонажа ") + 16, massiv[7].length);
+      var nick = massiv[7].substring(massiv[7].indexOf("- Имя персонажа: ") + 16, massiv[7].length);
       let chann2 = message.guild.channels.cache.find(channel => channel.name === "├📝┤лог-заявки");
       let dUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
       let filter = (reaction, user) => reaction.emoji.name == '✅' && user.id != message.author.id || reaction.emoji.name == '🗑️' && user.id != message.author.id || reaction.emoji.name == '❌' && user.id != message.author.id;
