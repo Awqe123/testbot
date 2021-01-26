@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
+
 client.on('ready', () => {
   console.log('[Bot] Включен!');
   client.user.setStatus('available')
@@ -48,23 +49,27 @@ client.on('message', message => {
     if(message.content.includes('Общая информация.') && message.content.includes('Игровая информация.') && message.content.includes('Дополнительная информация.')){
       message.react('✅');
       message.react('❌');
+      message.react('🗑️');
       let massiv = message.content.split('\n');
       var nick = massiv[7].substring(massiv[7].indexOf("- Имя персонажа ") + 16, massiv[7].length);
       let chann2 = message.guild.channels.cache.find(channel => channel.name === "├📝┤лог-заявки");
       let dUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
-      let filter = (reaction, user) => reaction.emoji.name == '✅' && user.id != message.author.id || reaction.emoji.name == '❌' && user.id != message.author.id;
+      let filter = (reaction, user) => reaction.emoji.name == '✅' && user.id != message.author.id || reaction.emoji.name == '🗑️' && user.id != message.author.id || reaction.emoji.name == '❌' && user.id != message.author.id;
       message.awaitReactions(filter, {max: 1})
 	    			.then(collected => {
 	    				const reaction = collected.first();
 	    				if(reaction.emoji.name === '✅')
 	    				{
-                dUser.send(`Доброго времени суток :wave:\nРад вам сообщить что ваша заявка на вступлению в гилью AvalonsMasters - **одобрена** :smiley: :handshake:\nПросьба в ближайшее время связаться с одним из рекрутеров из списка ниже.\n<@529963505407754244>\n<@404348692515127297>\n<@428090031639363595>\n<@424272265945808917>\n<@330708859394064395>\n<@411508439752245249>`);
+                dUser.send(`Доброго времени суток :wave:\nРад вам сообщить что ваша заявка на вступлению в гилью AvalonsMasters - **одобрена** :smiley: :handshake:\nПросьба в ближайшее время связаться с одним из рекрутеров из списка ниже, так - же **изучите** канал правил <#792496674941173771>.\n<@529963505407754244>\n<@404348692515127297>\n<@428090031639363595>\n<@424272265945808917>\n<@330708859394064395>\n<@411508439752245249>`);
                 chann2.send(message.content);
               }
 	    				else if(reaction.emoji.name === '❌')
 	    				{
-                dUser.send("Доброго времени суток :wave:\nУвы, но заявка на вступление в гильдию AvalonsMasters - **отклонена** :pensive:\nВсего доброго!"),chann2.send(message.content), dUser.kick("отказ"); // Бред
-                //chann2.send("Ник"+nick+"\nDiscord: <@" +dUser+ ">\nОткуда узнал: "+massiv[14].substring(massiv[14].indexOf("- Имя персонажа ") + 51, massiv[14].length)), dUser.kick("отказ");
+                dUser.send("Доброго времени суток :wave:\nУвы, но заявка на вступление в гильдию AvalonsMasters - **отклонена** :pensive:\nВсего доброго!"),chann2.send(message.content), dUser.kick("отказ");
+              }
+              else if(reaction.emoji.name === '🗑️')
+	    				{
+                chann2.send(message.content);
               }
 				});
     }
@@ -83,6 +88,10 @@ client.on("messageReactionAdd", (reaction, user) => {
     }
     else if(reaction.emoji.name === "❌"){
       chann2.send("<@"+user.id+"> **Отклонил** заявку");
+      reaction.message.delete()
+    }
+    else if(reaction.emoji.name === "🗑️"){
+      chann2.send("<@"+user.id+"> **Удалил** заявку");
       reaction.message.delete()
     }
   }
