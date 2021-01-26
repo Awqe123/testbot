@@ -1,5 +1,11 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
+http = require 'http'
+handle = (req, res) -> res.end "hit"
+
+server = http.createServer handle
+
+server.listen process.env.PORT || 5000
 
 
 client.on('ready', () => {
