@@ -13,7 +13,8 @@ function arrayRandElement(arr) {
 }
 // message.author.send("123") 
 client.on('message', message => {
-  if (message.content === 'ping') {
+  if (message.content === '.ping') {
+	message.delete();
     message.channel.send('Получаю информацию...').then (async (msg) =>{
       msg.delete()
       const embed = {"title": "Пропинговка бота.. ",
