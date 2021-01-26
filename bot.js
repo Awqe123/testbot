@@ -5,12 +5,7 @@ const client = new Discord.Client();
 client.on('ready', () => {
   console.log('[Bot] Включен!');
   client.user.setStatus('available')
-  client.user.setPresence({
-      game: {
-          name: 'За Fucking Slaves',
-          type: "WATCHING"
-      }
-  });
+  client.user.setPresence({ activity: { name: 'твоем ANAL пальцем' }, status: '1' })
 });
 function arrayRandElement(arr) {
   var rand = Math.floor(Math.random() * arr.length);
