@@ -32,11 +32,13 @@ client.on('message', message => {
       var rand = Math.floor(Math.random() * arr.length);
       let massiv = message.content.split('\n');
       var nick = massiv[7].substring(massiv[7].indexOf("- Имя персонажа:") + 16, massiv[7].length);
+      var name = massiv[1].substring(massiv[1].indexOf("- Ваше реальное имя:") + 20, massiv[1].length);
       let chann1 = message.guild.channels.cache.find(channel => channel.name === "├📝┤проверка-заявок");
       if(massiv[0].includes('1. Общая информация.'))
       {
         if(massiv[2].substring(massiv[2].indexOf("- Ваш возраст: ") + 15, massiv[2].length) < 14) return message.delete(), message.channel.send("<@"+message.author.id+">\nУвы, но вы нам не подходите :pensive:  \nПриходите как повзрослеете").then(m => m.delete({timeout: 1000 * 30}));
-        if(nick.includes('  ')||nick.includes(' ')) return message.delete(), message.channel.send("<@"+message.author.id+">\nУкажите свой ник в игре/уберите лишние пробелы из пункта игровой ник").then(m => m.delete({timeout: 1000 * 30}));
+        if(nick.includes('  ')||nick.includes(' ')) return message.delete(), message.channel.send("<@"+message.author.id+">\nУкажите свой ник в игре/уберите лишние пробелы из пункта 'Имя персонажа:'").then(m => m.delete({timeout: 1000 * 30}));
+        if(name.includes('  ')||name.includes(' ')) return message.delete(), message.channel.send("<@"+message.author.id+">\nУкажите свое реальное имя/уберите лишние пробелы из пункта 'Ваше реальное имя:'").then(m => m.delete({timeout: 1000 * 30}));
         const embed = {"title":
             message.member.displayName + ", ваша заявка была отправлена на проверку!\nОтвет по ваше заявки вы получите в ЛС",
             "color": 3316565,
@@ -71,6 +73,7 @@ client.on('message', message => {
       message.react('🗑️');
       let massiv = message.content.split('\n');
       var nick = massiv[7].substring(massiv[7].indexOf("- Имя персонажа:") + 16, massiv[7].length);
+      var name = massiv[1].substring(massiv[1].indexOf("- Ваше реальное имя:") + 20, massiv[1].length);
       let chann2 = message.guild.channels.cache.find(channel => channel.name === "├📝┤лог-заявки");
       let dUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
       let filter = (reaction, user) => reaction.emoji.name == '✅' && user.id != message.author.id || reaction.emoji.name == '🗑️' && user.id != message.author.id || reaction.emoji.name == '❌' && user.id != message.author.id;
@@ -81,6 +84,7 @@ client.on('message', message => {
 	    				{
                 dUser.send(`Доброго времени суток :wave:\nРад вам сообщить что ваша заявка на вступлению в гилью AvalonsMasters - **одобрена** :smiley: :handshake:\nПросьба в ближайшее время связаться с одним из рекрутеров из списка ниже, так - же **изучите** канал правил <#792496674941173771>.\n<@529963505407754244>\n<@404348692515127297>\n<@428090031639363595>\n<@424272265945808917>\n<@330708859394064395>\n<@411508439752245249>`);
                 chann2.send(message.content);
+                dUser.setNickname(nick +"("+name+")");
               }
 	    				else if(reaction.emoji.name === '❌')
 	    				{
