@@ -42,7 +42,7 @@ client.on('message', message => {
         text: `Mclore Bot  | AvalonsMasters`
         }
       };
-      message.channel.send({ embed: exampleEmbed }).then(m => m.delete({timeout: 1000 * 10}));
+      message.channel.send({ embed: exampleEmbed }).then(m => m.delete({timeout: 1000 * 60}));
       
       }
     })
