@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-
+var jp = require('jsonpath');
+var request = require('request');
 
 client.on('ready', () => {
   console.log('[Bot] Включен!');
@@ -11,9 +12,41 @@ function arrayRandElement(arr) {
   var rand = Math.floor(Math.random() * arr.length);
   return arr[rand];
 }
-var request = require('request');
 // message.author.send("123") 
 client.on('message', message => {
+  if (message.content === '.members') {
+    message.delete();
+    request('https://gameinfo.albiononline.com/api/gameinfo/guilds/hxYXdU_pQ02RHFumCemDwQ/members', function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      data = JSON.parse(body);
+      var names = jp.query(data, '$..Name');
+      var kolvo = -3;
+      for (var key in data) {
+        if (data.hasOwnProperty(key)) {
+          kolvo++;
+        }
+      }
+      const exampleEmbed = {
+        title: 'Список людей в гильдии ',
+        timestamp: data.Timestamp,
+        color: 3316565,
+        description: "Всего в гильдии: " +kolvo+" человек",
+        fields: [
+          {
+            name: 'Nick',
+            value: names,
+            inline: true,
+          }
+      ],
+      footer: {
+        text: `Mclore Bot  | AvalonsMasters`
+        }
+      };
+      message.channel.send({ embed: exampleEmbed }).then(m => m.delete({timeout: 1000 * 10}));
+      
+      }
+    })
+  }
   if (message.content === '.gold') {
     message.delete();
     request('https://www.albion-online-data.com/api/v2/stats/gold?count=1', function (error, response, body) {
@@ -29,7 +62,7 @@ client.on('message', message => {
         },
         "color": 3316565,
         "footer": {
-          "text": `Курс | AvalonsMasters`
+          "text": `Mclore Bot | AvalonsMasters`
           }
         };
         message.channel.send({embed}).then(m => m.delete({timeout: 1000 * 60}));
@@ -61,8 +94,8 @@ client.on('message', message => {
       if(massiv[0].includes('1. Общая информация.'))
       {
         if(massiv[2].substring(massiv[2].indexOf("- Ваш возраст: ") + 15, massiv[2].length) < 14) return message.delete(), message.channel.send("<@"+message.author.id+">\nУвы, но вы нам не подходите :pensive:  \nПриходите как повзрослеете").then(m => m.delete({timeout: 1000 * 30}));
-        if(nick.includes('  ')||nick.includes(' ')) return message.delete(), message.channel.send("<@"+message.author.id+">\nУкажите свой ник в игре/уберите лишние пробелы из пункта 'Имя персонажа:'").then(m => m.delete({timeout: 1000 * 30}));
-        if(name.includes('  ')||name.includes(' ')) return message.delete(), message.channel.send("<@"+message.author.id+">\nУкажите свое реальное имя/уберите лишние пробелы из пункта 'Ваше реальное имя:'").then(m => m.delete({timeout: 1000 * 30}));
+        if(nick.includes('  ')||nick.includes(' ')) return message.delete(), message.channel.send("<@"+message.author.id+">\nУкажите свой ник в игре/уберите лишние пробелы из пункта 'Имя персонажа:'\nПример как должно выглядить:\n `- Имя персонажа:Vladik2008`").then(m => m.delete({timeout: 1000 * 30}));
+        if(name.includes('  ')||name.includes(' ')) return message.delete(), message.channel.send("<@"+message.author.id+">\nУкажите свое реальное имя/уберите лишние пробелы из пункта 'Ваше реальное имя:'\nПример как должно выглядить:\n `- Ваше реальное имя:Владик`").then(m => m.delete({timeout: 1000 * 30}));
         const embed = {"title":
             message.member.displayName + ", ваша заявка была отправлена на проверку!\nОтвет по ваше заявки вы получите в ЛС",
             "color": 3316565,
@@ -70,7 +103,7 @@ client.on('message', message => {
               "url": arr[rand],
             },
             "footer": {
-                "text": "Заявки | AvalonsMasters"
+                "text": "Mclore Bot | AvalonsMasters"
             }
         };
         chann1.send(message.content + "\nАвтор анкеты: <@" + message.author.id + ">\nhttps://app.sigmacomputing.com/embed/2Fb3n6osB7MZ0psRKGqR6?name="+nick),message.delete(), message.channel.send({embed}).then(m => m.delete({timeout: 1000 * 30}));
@@ -83,7 +116,7 @@ client.on('message', message => {
       "description":"Сообщение удалено, данный чат работает только для анкет\nПроверь правильность своей анкеты..",
       "timestamp":new Date(),
       "footer": {
-          "text": "Заявки | AvalonsMasters"
+          "text": "Mclore Bot | AvalonsMasters"
       }
       };
       message.channel.send({embed}).then(m => m.delete({timeout: 1000 * 30}));
