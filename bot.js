@@ -11,8 +11,32 @@ function arrayRandElement(arr) {
   var rand = Math.floor(Math.random() * arr.length);
   return arr[rand];
 }
+var request = require('request');
 // message.author.send("123") 
 client.on('message', message => {
+  if (message.content === '.gold') {
+    message.delete();
+    request('https://www.albion-online-data.com/api/v2/stats/gold?count=1', function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      data = JSON.parse(body)[0];
+      message.channel.send('Получаю информацию...').then (async (msg) =>{
+        msg.delete()
+        const embed = {"title": "Курс золота ",
+        "description":"1 золотая монета за " + data.price + " серебра.",
+        "timestamp": data.timestamp,
+        "thumbnail": {
+          "url": "https://albiononline.com/assets/images/shop/gold-21000.png",
+        },
+        "color": 3316565,
+        "footer": {
+          "text": `Курс | AvalonsMasters`
+          }
+        };
+        message.channel.send({embed}).then(m => m.delete({timeout: 1000 * 60}));
+      })
+      }
+    })
+  }
   if (message.content === '.ping') {
     message.delete();
     message.channel.send('Получаю информацию...').then (async (msg) =>{
