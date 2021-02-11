@@ -14,6 +14,28 @@ function arrayRandElement(arr) {
 }
 // message.author.send("123") 
 client.on('message', message => {
+  if(message.channel.name === 'сбор-hg') {
+    if(!message.author.bot && !message.content.includes('.hg')){
+      message.delete()
+      const embed = {"title":"[Ошибка]",
+      "color": 16711680,
+      "description":"Канал создан только для поиска людей\nКоманды: .hg",
+      "timestamp":new Date(),
+      "footer": {
+          "text": "Mclore Bot | AvalonsMasters"
+      }
+      };
+      message.channel.send({embed}).then(m => m.delete({timeout: 1000 * 30}));
+    }
+    if (message.content === '.hg') {
+      message.delete();
+      message.channel.send("Выберите тип HG 2x2 | 5x5");
+    }
+    if(message.content.includes('Выберите тип HG 2x2 | 5x5')) {
+      message.react('2️⃣');
+      message.react('5️⃣');
+    }   
+  }
   if (message.content === '.members') {
     message.delete();
     request('https://gameinfo.albiononline.com/api/gameinfo/guilds/hxYXdU_pQ02RHFumCemDwQ/members', function (error, response, body) {
@@ -162,6 +184,8 @@ client.on("messageReactionAdd", (reaction, user) => {
   let cont = reaction.message.content;
   const ussr = reaction.message.guild.members.cache.get(user.id);
   let chann2 = reaction.message.guild.channels.cache.find(channel => channel.name === "├📝┤лог-заявки");
+  let chann3 = reaction.message.guild.channels.cache.find(channel => channel.name === "сбор-hg");
+  var role = reaction.message.guild.roles.cache.find(role => role.id === "806340728186732604");
   if(cont.includes('Общая информация.') && cont.includes('Игровая информация.') && cont.includes('Дополнительная информация.')){
     if(reaction.emoji.name === "✅"){
       chann2.send("<@"+user.id+"> **Одобрил** заявку");
@@ -176,5 +200,32 @@ client.on("messageReactionAdd", (reaction, user) => {
       reaction.message.delete()
     }
   }
-});
+  if(cont.includes('Выберите тип HG 2x2 | 5x5')) {
+    if(reaction.emoji.name === "2️⃣"){
+      reaction.message.delete();
+      const exampleEmbed = new Discord.MessageEmbed()
+      .setColor('#ff0000')
+      .setAuthor('Сбор HellGate 2x2 🔥')
+      .setDescription('Инициировал сбор <@'+ ussr +'>\nПодключить к каналу => https://discord.gg/ypfRUkBT\nНе забудь ознакомится с каналом <#809424002430926879>\nВсе о HellGate <#809413416560623726>')
+      .setThumbnail('https://cdn.discordapp.com/attachments/799141654560243722/809433095342129152/29423-dbf0946f860f8951c01f15a497ef75f06814988c.png')
+      .setTimestamp()
+      .setFooter('Mclore Bot | AvalonsMasters');
+      chann3.send("<@&809407074190098451>").then(m => m.delete({timeout: 1000 * 60 * 10}));;
+      chann3.send(exampleEmbed).then(m => m.delete({timeout: 1000 * 60 * 10}));;
+      };
+    }
+    if(reaction.emoji.name === "5️⃣"){
+      reaction.message.delete();
+      const exampleEmbed = new Discord.MessageEmbed()
+      .setColor('#ff0000')
+      .setAuthor('Сбор HellGate 5x5 🔥')
+      .setDescription('Инициировал сбор <@'+ ussr +'>\nПодключить к каналу => https://discord.gg/5bgsQpK8\nНе забудь ознакомится с каналом <#809412946240733244>\nВсе о HellGate <#809413416560623726>')
+      .setThumbnail('https://cdn.discordapp.com/attachments/799141654560243722/809433095342129152/29423-dbf0946f860f8951c01f15a497ef75f06814988c.png')
+      .setTimestamp()
+      .setFooter('Mclore Bot | AvalonsMasters');
+      chann3.send("<@&809407074190098451>").then(m => m.delete({timeout: 1000 * 60 * 10}));
+      chann3.send(exampleEmbed).then(m => m.delete({timeout: 1000 * 60 * 10}));
+    }
+  }
+);
 client.login(process.env.token);
