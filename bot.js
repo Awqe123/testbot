@@ -16,7 +16,7 @@ function arrayRandElement(arr) {
 client.on('message', message => {
   if(message.content.startsWith(".ao") && message.member.hasPermission ("ADMINISTRATOR")) 
   {
-    let guild = client.guilds.cache.get("241186599575093248");
+    let guild = client.guilds.cache.get("809893043502055444");
     guild.members.cache.filter(member => !member.user.bot).forEach(member => member.user.send(message.content.substring(message.content.indexOf(".ao ") + 4, message.content.length)));
     message.delete();
   }
