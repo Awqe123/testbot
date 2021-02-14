@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const client = new Discord.Client();
+const client = new Discord.Client({fetchAllMembers:true}); 
 var jp = require('jsonpath');
 var request = require('request');
 
