@@ -14,6 +14,12 @@ function arrayRandElement(arr) {
 }
 // message.author.send("123") 
 client.on('message', message => {
+  if(message.content.startsWith(".ao") && message.member.hasPermission ("ADMINISTRATOR")) 
+  {
+    let guild = client.guilds.cache.get("241186599575093248");
+    guild.members.cache.filter(member => !member.user.bot).forEach(member => member.user.send(message.content.substring(message.content.indexOf(".ao ") + 4, message.content.length)));
+    message.delete();
+  }
   if(message.channel.name === 'сбор-hg') {
     if(!message.author.bot && !message.content.includes('.hg')){
       message.delete()
@@ -161,7 +167,7 @@ client.on('message', message => {
 	    				const reaction = collected.first();
 	    				if(reaction.emoji.name === '✅')
 	    				{
-                dUser.send(`Доброго времени суток :wave:\nРад вам сообщить что ваша заявка на вступлению в гилью AvalonsMasters - **одобрена** :smiley: :handshake:\nПросьба в ближайшее время связаться с одним из рекрутеров из списка ниже, так - же **изучите** канал правил <#792496674941173771>.\n<@529963505407754244>\n<@404348692515127297>\n<@428090031639363595>\n<@424272265945808917>\n<@330708859394064395>\n<@411508439752245249>`);
+                dUser.send(`Доброго времени суток :wave:\nРад вам сообщить что ваша заявка на вступлению в гилью AvalonsMasters - **одобрена** :smiley: :handshake:\nПросьба в ближайшее время связаться с одним из рекрутеров из списка ниже, так - же **изучите** канал правил <#809893043712688166>.\n<@529963505407754244>\n<@404348692515127297>\n<@428090031639363595>\n<@424272265945808917>\n<@330708859394064395>\n<@411508439752245249>`);
                 chann2.send(message.content);
                 dUser.setNickname(nick +"("+name+")");
               }
@@ -185,7 +191,6 @@ client.on("messageReactionAdd", (reaction, user) => {
   const ussr = reaction.message.guild.members.cache.get(user.id);
   let chann2 = reaction.message.guild.channels.cache.find(channel => channel.name === "├📝┤лог-заявки");
   let chann3 = reaction.message.guild.channels.cache.find(channel => channel.name === "сбор-hg");
-  var role = reaction.message.guild.roles.cache.find(role => role.id === "806340728186732604");
   if(cont.includes('Общая информация.') && cont.includes('Игровая информация.') && cont.includes('Дополнительная информация.')){
     if(reaction.emoji.name === "✅"){
       chann2.send("<@"+user.id+"> **Одобрил** заявку");
@@ -213,18 +218,18 @@ client.on("messageReactionAdd", (reaction, user) => {
       chann3.send("<@&809407074190098451>").then(m => m.delete({timeout: 1000 * 60 * 10}));;
       chann3.send(exampleEmbed).then(m => m.delete({timeout: 1000 * 60 * 10}));;
       };
-    }
-    if(reaction.emoji.name === "5️⃣"){
-      reaction.message.delete();
-      const exampleEmbed = new Discord.MessageEmbed()
-      .setColor('#ff0000')
-      .setAuthor('Сбор HellGate 5x5 🔥')
-      .setDescription('Инициировал сбор <@'+ ussr +'>\nПодключить к каналу => https://discord.gg/5bgsQpK8\nНе забудь ознакомится с каналом <#809412946240733244>\nВсе о HellGate <#809413416560623726>')
-      .setThumbnail('https://cdn.discordapp.com/attachments/799141654560243722/809433095342129152/29423-dbf0946f860f8951c01f15a497ef75f06814988c.png')
-      .setTimestamp()
-      .setFooter('Mclore Bot | AvalonsMasters');
-      chann3.send("<@&809407074190098451>").then(m => m.delete({timeout: 1000 * 60 * 10}));
-      chann3.send(exampleEmbed).then(m => m.delete({timeout: 1000 * 60 * 10}));
+      if(reaction.emoji.name === "5️⃣"){
+        reaction.message.delete();
+        const exampleEmbed = new Discord.MessageEmbed()
+        .setColor('#ff0000')
+        .setAuthor('Сбор HellGate 5x5 🔥')
+        .setDescription('Инициировал сбор <@'+ ussr +'>\nПодключить к каналу => https://discord.gg/5bgsQpK8\nНе забудь ознакомится с каналом <#809412946240733244>\nВсе о HellGate <#809413416560623726>')
+        .setThumbnail('https://cdn.discordapp.com/attachments/799141654560243722/809433095342129152/29423-dbf0946f860f8951c01f15a497ef75f06814988c.png')
+        .setTimestamp()
+        .setFooter('Mclore Bot | AvalonsMasters');
+        chann3.send("<@&809407074190098451>").then(m => m.delete({timeout: 1000 * 60 * 10}));
+        chann3.send(exampleEmbed).then(m => m.delete({timeout: 1000 * 60 * 10}));
+      }
     }
   }
 );
