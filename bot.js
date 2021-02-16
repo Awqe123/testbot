@@ -20,15 +20,6 @@ client.on('message', message => {
     guild.members.cache.filter(member => !member.user.bot).forEach(member => member.user.send(message.content.substring(message.content.indexOf(".ao ") + 4, message.content.length)));
     message.delete();
   }
-  if(message.content.startsWith(".test") && message.member.hasPermission ("ADMINISTRATOR")) 
-  {
-    let guild = client.guilds.cache.get("809893043502055444");
-    guild.members.cache.filter(member => !member.user.bot).forEach(member => {
-      if (member.roles.cache.some(r => r.name === "Рекрутёр")){
-        console.log(member.user.id);
-      }
-    });
-  }
   if(message.channel.name === 'сбор-hg') {
     if(!message.author.bot && !message.content.includes('.hg')){
       message.delete()
