@@ -20,6 +20,15 @@ client.on('message', message => {
     guild.members.cache.filter(member => !member.user.bot).forEach(member => member.user.send(message.content.substring(message.content.indexOf(".ao ") + 4, message.content.length)));
     message.delete();
   }
+  if(message.content.startsWith(".test") && message.member.hasPermission ("ADMINISTRATOR")) 
+  {
+    let guild = client.guilds.cache.get("809893043502055444");
+    guild.members.cache.filter(member => !member.user.bot).forEach(member => {
+      if (member.roles.cache.some(r => r.name === "Рекрутёр")){
+        console.log(member.user.id);
+      }
+    });
+  }
   if(message.channel.name === 'сбор-hg') {
     if(!message.author.bot && !message.content.includes('.hg')){
       message.delete()
@@ -167,9 +176,15 @@ client.on('message', message => {
 	    				const reaction = collected.first();
 	    				if(reaction.emoji.name === '✅')
 	    				{
-                dUser.send(`Доброго времени суток :wave:\nРад вам сообщить что ваша заявка на вступлению в гилью AvalonsMasters - **одобрена** :smiley: :handshake:\nПросьба в ближайшее время связаться с одним из рекрутеров из списка ниже, так - же **изучите** канал правил <#809893043712688166>.\n<@529963505407754244>\n<@404348692515127297>\n<@428090031639363595>\n<@424272265945808917>\n<@330708859394064395>\n<@411508439752245249>`);
+                dUser.send(`Доброго времени суток :wave:\nРад вам сообщить что ваша заявка на вступлению в гилью AvalonsMasters - **одобрена** :smiley: :handshake:\nПросьба в ближайшее время связаться с одним из рекрутеров из списка ниже, так - же **изучите** канал правил <#809893043712688166>.`);
                 chann2.send(message.content);
                 dUser.setNickname(nick +"("+name+")");
+                let guild = client.guilds.cache.get("809893043502055444");
+                guild.members.cache.filter(member => !member.user.bot).forEach(member => {
+                  if (member.roles.cache.some(r => r.name === "Рекрутёр")){
+                    dUser.send('<@' + member.user.id+'>');
+                  }
+                });
               }
 	    				else if(reaction.emoji.name === '❌')
 	    				{
