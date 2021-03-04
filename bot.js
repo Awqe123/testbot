@@ -112,7 +112,7 @@ client.on('message', message => {
     })
   }
   if(message.channel.name === '├📝┤заявки') {
-    if(message.content.includes('Общая информация.') && message.content.includes('Игровая информация.') && message.content.includes('Откуда вы о нас узнали? (Ник рекрута/видео/чат):') && message.content.includes('Дополнительная информация.')){
+    if(message.content.includes('1. Общая информация. ')) {
       var arr = ['https://media.tenor.com/images/116b7c643ca23c3814bd06aac7c5183e/tenor.gif','https://media.tenor.com/images/515890bed747d2b22798d2e9c3f8ffce/tenor.gif',"https://media.tenor.com/images/c655317acf2715b47de6454ef2a77947/tenor.gif","https://media.tenor.com/images/59b19cbf2f4ccbb3453791faf837b307/tenor.gif","https://media.tenor.com/images/c6c06054d66324182dadf822cae49a2e/tenor.gif","https://i.gifer.com/C4wf.gif","https://i.gifer.com/47tv.gif","https://media.tenor.com/images/d470f38a6ddc0c3dd32f1c94ad5f6c43/tenor.gif","https://media.tenor.com/images/4ac2ac840e2b30e86b1937a7668f7b7a/tenor.gif","https://media.tenor.com/images/06d22dd40d562a2055ae9e80d2141dec/tenor.gif","https://i.gifer.com/VAyR.gif","https://i.gifer.com/Vg5.gif","https://i.gifer.com/6mG.gif","https://i.gifer.com/Be.gif","https://i.gifer.com/tGe.gif","https://i.gifer.com/Paw.gif"];
       var rand = Math.floor(Math.random() * arr.length);
       let massiv = message.content.split('\n');
@@ -137,7 +137,7 @@ client.on('message', message => {
         chann1.send(message.content + "\nАвтор анкеты: <@" + message.author.id + ">\nhttps://app.sigmacomputing.com/embed/2Fb3n6osB7MZ0psRKGqR6?name="+nick),message.delete(), message.channel.send({embed}).then(m => m.delete({timeout: 1000 * 30}));
       }
     }
-    if(!message.author.bot && !message.content.includes('Общая информация.') && !message.content.includes('.ping') && !message.content.includes('Игровая информация.') && !message.content.includes('Откуда вы о нас узнали? (Ник рекрута/видео/чат):') && !message.content.includes('Дополнительная информация.')){
+    if(!message.author.bot && !message.content.includes('1. Общая информация. ')){
       message.delete()
       const embed = {"title":"[Ошибка]",
       "color": 16711680,
